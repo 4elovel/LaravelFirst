@@ -16,13 +16,10 @@ return new class extends Migration
             $table->text('summary')->nullable();
             $table->text('short_description')->nullable();
             $table->text('full_text')->nullable();
-            $table->timestamps(); // Додає поля created_at та updated_at
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('news');
