@@ -22,5 +22,14 @@
         <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <select class="form-control" id="category" name="category">
+            <option value=""></option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Add</button>
 </form>

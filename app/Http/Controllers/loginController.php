@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MyUsers;
+use App\Models\Users;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -22,10 +22,14 @@ class loginController extends Controller
         $email = $request->input('email');
         $formCode = $request->input('code');
         if ($email!=null && $formCode!=null){
-            if (MyUsers::query()->where('email','=',$email)
+            if (Users::query()->where('email','=',$email)
                 ->where('code','=',$formCode)
                 ->count()){
-                return view('index', ['news' => News::all()]);
+                session(['email'=>$email]);
+                session(['code'=>$formCode]);
+                session(['user_id'=>Users::query()->where('email','=',$email)
+                    ->where('code','=',$formCode)->value('id')]);
+                return redirect('/main');
             }
         }
         $code = mt_rand(100000, 999999);
@@ -33,11 +37,10 @@ class loginController extends Controller
         Mail::raw($message, function ($message) use ($email) {
             $message->to($email)->subject('Код для входу');
         });
-        MyUsers::query()->updateOrCreate(
+        Users::query()->updateOrCreate(
         ['email' => $email],
         ['code' => $code]
         );
-
-        return view('loginView');
+return redirect('/');
     }
 }

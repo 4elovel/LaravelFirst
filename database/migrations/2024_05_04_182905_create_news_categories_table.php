@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('news_categories', function (Blueprint $table) {
             $table->id();
-            $table->text('summary')->nullable();
-            $table->text('short_description')->nullable();
-            $table->text('full_text')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->string("name")->nullable();
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('news_categories');
     }
 };

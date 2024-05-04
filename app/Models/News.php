@@ -10,9 +10,14 @@ class News extends Model
     use HasFactory;
 
     protected $table = 'news';
-    protected $fillable = [
-        'summary',
-        'short_description',
-        'full_text',
+    protected $guarded = [
     ];
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(NewsCategory::class);
+    }
 }
